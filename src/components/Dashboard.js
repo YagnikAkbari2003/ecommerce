@@ -12,6 +12,7 @@ import skirt from '../assets/images/skirt.jpg'
 import ResponsiveNavBar from './ResponsiveNavBar';
 import Breadcrumb from './Breadcrumb';
 import { useSelector } from 'react-redux';
+import CouponCode from './CouponCode';
 
 const Dashboard = () => {
     const [responsivenavbar, setResponsiveNavbar] = useState(false);
@@ -21,10 +22,10 @@ const Dashboard = () => {
     return (
         <>
             <header className='px-2 py-4 shadow-sm lg:bg-white `responsivenavbar ? bg-gray-900 :`'>
-                <div className='md:container flex items-center justify-between'>
-                    <Link to="/">
+                <div className='md:container flex items-center justify-end'>
+                    {/* <Link to="/">
                         <img src={logo} alt="Logo" className='w-32' />
-                    </Link>
+                    </Link> */}
 
                     <div className='flex item-center space-x-4'>
                         <Link to="/wishlist" className='text-center text-gray-700 hover:text-primary transition relative flex-col items-center hidden lg:flex'>
@@ -107,6 +108,9 @@ const Dashboard = () => {
                 <div className='text-gray-600 font-medium'><Breadcrumb /></div>
             </div>
             <Outlet />
+            <div className="coupon-code-container">
+                <CouponCode />
+            </div>
         </>
     )
 }

@@ -1,6 +1,36 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Users from '../../data/users';
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Find user in Users array based on email
+        const user = Users.find(user => user.email === email && user.password === password);
+
+        if (user) {
+            // Store user information in local storage
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            // Redirect based on user type
+            if (user.usertype === 'user') {
+                navigate('/Shop');
+            } else if (user.usertype === 'admin') {
+                navigate('/AdminDashboard');
+            }
+        } else {
+            // Handle invalid credentials
+            if (email.trim() === '' || password.trim() === '') {
+                alert('Please enter email and password.');
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        }
+    };
+
     return (
         <div className='container py-16'>
             <div className='max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden'>
@@ -8,15 +38,16 @@ const Login = () => {
                 <p className='text-gray-600 mb-6 text-sm'>
                     Login if you are returning customer
                 </p>
-                <form action=''>
+                {/* Login Form */}
+                <form onSubmit={handleSubmit}>
                     <div className='space-y-4'>
                         <div>
                             <label className='text-gray-600 mb-6 block'>Email address</label>
-                            <input type='email' className='block w-full border border-gray-300 text-gray-600 px-4 py-3 rounded text-sm focus:ring-0 focus:border-primary placeholder-gray-400' placeholder='Enter your email address' />
+                            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} className='block w-full border border-gray-300 text-gray-600 px-4 py-3 rounded text-sm focus:ring-0 focus:border-primary placeholder-gray-400' placeholder='Enter your email address' />
                         </div>
                         <div>
                             <label className='text-gray-600 mb-6 block'>Password</label>
-                            <input type='password' className='block w-full border border-gray-300 text-gray-600 px-4 py-3 rounded text-sm focus:ring-0 focus:border-primary placeholder-gray-400' placeholder='Enter your password' />
+                            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} className='block w-full border border-gray-300 text-gray-600 px-4 py-3 rounded text-sm focus:ring-0 focus:border-primary placeholder-gray-400' placeholder='Enter your password' />
                         </div>
                     </div>
                     <div className='flex items-center justify-between mt-6'>

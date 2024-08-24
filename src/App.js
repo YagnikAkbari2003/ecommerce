@@ -11,15 +11,20 @@ import Wishlist from '../src/pages/WishList/Wishlist';
 import DeliveryDetails from './pages/Cart/DeliveryDetails';
 import OrderDetails from './pages/Cart/OrderDetails';
 import PostOrderPage from './pages/Cart/PostOrderPage';
+import AdminDashboard from './components/AdminDashboard';
+import PrivateRoute from '../src/pages/Routes/PrivateRoutes/PrivateRoute'
 function App() {
   return (
     <div className="padding-10">
       <Dashboard />
       <Routes>
         <Route path='/' element={<Home />} />
+        {/* <PrivateRoute path='/AdminDashboard' element={<AdminDashboard />} /> */}
         <Route path='/shop' element={<Shop />} />
         <Route path="/product-view/:id" element={<ProductView />} />
-        <Route path='/login' element={<Login />} />
+        <Route
+          path='/login'
+          element={<Login />} />
         <Route path='/wishlist' element={<Wishlist />} />
         <Route path='/account' element={<Account />} />
         <Route path='/cart' element={<Cart />} >
